@@ -55,7 +55,7 @@ public class ProfilGestion {
         if(retCode == 0){
             response = Utility.constructJSON("updateprofil",true);
         }else {
-            response = Utility.constructJSON("updateprofil",false, "Cet E-mail est déja utilisé par un utilisateur enregistré");
+            response = Utility.constructJSON("updateprofil",false, "Cet E-mail est déja utilisé par un utilisateur enregistré.");
         }
           } catch (IOException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
