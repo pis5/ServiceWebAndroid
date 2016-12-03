@@ -32,7 +32,7 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
     }
     public Personne findByMailAndPass(String mail, String pass){
         
-    Personne P= new Personne();
+    Personne P= null;
     Query q = em.createNamedQuery("Personne.findByMailAndPass");
     q.setParameter("mail", mail);
     q.setParameter("pass", pass);
