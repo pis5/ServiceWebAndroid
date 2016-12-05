@@ -29,4 +29,6 @@ public class EvenementInvitationFacade extends AbstractFacade<EvenementInvitatio
         super(EvenementInvitation.class);
     }
     
+    
+    
 }

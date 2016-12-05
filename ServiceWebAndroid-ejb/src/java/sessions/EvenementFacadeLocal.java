@@ -6,6 +6,7 @@
 package sessions;
 
 import entities.Evenement;
+import entities.Personne;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,11 @@ public interface EvenementFacadeLocal {
     List<Evenement> findRange(int[] range);
 
     int count();
+
+    public List<Evenement> evenementsPersonne(Personne P);
+
+    
+
+    
     
 }

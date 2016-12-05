@@ -27,6 +27,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -53,6 +54,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Personne.findByMailAndPass", query = "SELECT p FROM Personne p WHERE p.email = :mail AND p.motDePasse = :pass")})
 public class Personne implements Serializable {
 
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,7 +74,7 @@ public class Personne implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "prenom")
     private String prenom;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -95,9 +100,6 @@ public class Personne implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "mot_de_passe")
     private String motDePasse;
-    @Lob
-    @Column(name = "photo")
-    private byte[] photo;
     @JoinTable(name = "demande_ajout", joinColumns = {
         @JoinColumn(name = "emetteur", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "recepteur", referencedColumnName = "id")})
@@ -216,13 +218,6 @@ public class Personne implements Serializable {
         this.motDePasse = motDePasse;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 
     @XmlTransient
     public List<Personne> getPersonneList() {
@@ -319,6 +314,14 @@ public class Personne implements Serializable {
     @Override
     public String toString() {
         return "entities.Personne[ id=" + id + " ]";
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
     
 }

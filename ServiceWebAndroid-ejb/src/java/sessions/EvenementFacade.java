@@ -6,9 +6,12 @@
 package sessions;
 
 import entities.Evenement;
+import entities.Personne;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +31,17 @@ public class EvenementFacade extends AbstractFacade<Evenement> implements Evenem
     public EvenementFacade() {
         super(Evenement.class);
     }
+
+     public List<Evenement> evenementsPersonne(Personne P){
+     List<Evenement> E= null;
+    Query q = em.createNamedQuery("Evenement.findByParticipant");
+    q.setParameter("personne", P);
+    
+    List L=q.getResultList();
+    if(L.size()>0){
+    E=(List<Evenement>) L;}
+    return E;
+     
+     }
     
 }

@@ -15,7 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -42,8 +44,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evenement.findByDateDeCreation", query = "SELECT e FROM Evenement e WHERE e.dateDeCreation = :dateDeCreation"),
     @NamedQuery(name = "Evenement.findByDateEvenement", query = "SELECT e FROM Evenement e WHERE e.dateEvenement = :dateEvenement"),
     @NamedQuery(name = "Evenement.findByHeure", query = "SELECT e FROM Evenement e WHERE e.heure = :heure"),
-    @NamedQuery(name = "Evenement.findByNombreInvitesMax", query = "SELECT e FROM Evenement e WHERE e.nombreInvitesMax = :nombreInvitesMax")})
+    @NamedQuery(name = "Evenement.findByNombreInvitesMax", query = "SELECT e FROM Evenement e WHERE e.nombreInvitesMax = :nombreInvitesMax"),
+    @NamedQuery(name = "Evenement.findByParticipant", query = "SELECT e FROM Evenement e WHERE :personne  Member OF e.personneList")
+    })
 public class Evenement implements Serializable {
+
+    @JoinTable(name = "participation", joinColumns = {
+        @JoinColumn(name = "evenement", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "participant", referencedColumnName = "id")})
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Personne> personneList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -207,6 +217,15 @@ public class Evenement implements Serializable {
     @Override
     public String toString() {
         return "entities.Evenement[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Personne> getPersonneList() {
+        return personneList;
+    }
+
+    public void setPersonneList(List<Personne> personneList) {
+        this.personneList = personneList;
     }
     
 }

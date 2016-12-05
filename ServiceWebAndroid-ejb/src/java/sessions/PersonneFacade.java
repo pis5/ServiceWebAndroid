@@ -5,6 +5,7 @@
  */
 package sessions;
 
+import entities.Evenement;
 import entities.Personne;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -41,4 +42,8 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
     P=(Personne) L.get(0);}
     return P;
     }
+    
+    
+    
+  
 }
