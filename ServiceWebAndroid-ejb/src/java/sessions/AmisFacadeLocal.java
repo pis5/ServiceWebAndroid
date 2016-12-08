@@ -5,7 +5,7 @@
  */
 package sessions;
 
-import entities.Evenement;
+import entities.Amis;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author ilias
  */
 @Local
-public interface EvenementFacadeLocal {
+public interface AmisFacadeLocal {
 
-    void create(Evenement evenement);
+    void create(Amis amis);
 
-    void edit(Evenement evenement);
+    void edit(Amis amis);
 
-    void remove(Evenement evenement);
+    void remove(Amis amis);
 
-    Evenement find(Object id);
+    Amis find(Object id);
 
-    List<Evenement> findAll();
+    List<Amis> findAll();
 
-    List<Evenement> findRange(int[] range);
+    List<Amis> findRange(int[] range);
 
     int count();
     

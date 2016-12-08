@@ -6,6 +6,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,18 +31,22 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EvenementInvitation.findAll", query = "SELECT e FROM EvenementInvitation e"),
     @NamedQuery(name = "EvenementInvitation.findByEvenement", query = "SELECT e FROM EvenementInvitation e WHERE e.evenementInvitationPK.evenement = :evenement"),
     @NamedQuery(name = "EvenementInvitation.findByEmetteur", query = "SELECT e FROM EvenementInvitation e WHERE e.evenementInvitationPK.emetteur = :emetteur"),
-    @NamedQuery(name = "EvenementInvitation.findByRecepteur", query = "SELECT e FROM EvenementInvitation e WHERE e.evenementInvitationPK.recepteur = :recepteur")})
+    @NamedQuery(name = "EvenementInvitation.findByRecepteur", query = "SELECT e FROM EvenementInvitation e WHERE e.evenementInvitationPK.recepteur = :recepteur"),
+    @NamedQuery(name = "EvenementInvitation.findByDate", query = "SELECT e FROM EvenementInvitation e WHERE e.date = :date")})
 public class EvenementInvitation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected EvenementInvitationPK evenementInvitationPK;
-    @JoinColumn(name = "evenement", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Evenement evenement1;
+    @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
     @JoinColumn(name = "emetteur", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Personne personne;
+    @JoinColumn(name = "evenement", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Evenement evenement1;
     @JoinColumn(name = "recepteur", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Personne personne1;
@@ -62,12 +70,12 @@ public class EvenementInvitation implements Serializable {
         this.evenementInvitationPK = evenementInvitationPK;
     }
 
-    public Evenement getEvenement1() {
-        return evenement1;
+    public Date getDate() {
+        return date;
     }
 
-    public void setEvenement1(Evenement evenement1) {
-        this.evenement1 = evenement1;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Personne getPersonne() {
@@ -76,6 +84,14 @@ public class EvenementInvitation implements Serializable {
 
     public void setPersonne(Personne personne) {
         this.personne = personne;
+    }
+
+    public Evenement getEvenement1() {
+        return evenement1;
+    }
+
+    public void setEvenement1(Evenement evenement1) {
+        this.evenement1 = evenement1;
     }
 
     public Personne getPersonne1() {

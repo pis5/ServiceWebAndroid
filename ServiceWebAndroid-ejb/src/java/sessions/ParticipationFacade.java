@@ -5,6 +5,8 @@
  */
 package sessions;
 
+import entities.Evenement;
+import entities.Participation;
 import entities.Personne;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,7 +19,7 @@ import javax.persistence.Query;
  * @author ilias
  */
 @Stateless
-public class PersonneFacade extends AbstractFacade<Personne> implements PersonneFacadeLocal {
+public class ParticipationFacade extends AbstractFacade<Participation> implements ParticipationFacadeLocal {
 
     @PersistenceContext(unitName = "ServiceWebAndroid-ejbPU")
     private EntityManager em;
@@ -27,21 +29,20 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
         return em;
     }
 
-    public PersonneFacade() {
-        super(Personne.class);
+    public ParticipationFacade() {
+        super(Participation.class);
     }
+      public List<Evenement> evenementsPersonne(Personne P){
+     List<Evenement> E= null;
+    Query q = em.createNamedQuery("Participation.findEventByParticipant");
+    q.setParameter("participant", P);
     
-    public Personne findByMailAndPass(String mail, String pass){
-        
-    Personne P= null;
-    Query q = em.createNamedQuery("Personne.findByMailAndPass");
-    q.setParameter("mail", mail);
-    q.setParameter("pass", pass);
     List L=q.getResultList();
     if(L.size()>0){
-    P=(Personne) L.get(0);}
-    return P;
-    }
-    
+    E=(List<Evenement>) L;}
+    return E;
+     
+     }   
+         
     
 }

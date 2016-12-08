@@ -5,7 +5,7 @@
  */
 package sessions;
 
-import entities.Evenement;
+import entities.DemandeAjout;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author ilias
  */
 @Local
-public interface EvenementFacadeLocal {
+public interface DemandeAjoutFacadeLocal {
 
-    void create(Evenement evenement);
+    void create(DemandeAjout demandeAjout);
 
-    void edit(Evenement evenement);
+    void edit(DemandeAjout demandeAjout);
 
-    void remove(Evenement evenement);
+    void remove(DemandeAjout demandeAjout);
 
-    Evenement find(Object id);
+    DemandeAjout find(Object id);
 
-    List<Evenement> findAll();
+    List<DemandeAjout> findAll();
 
-    List<Evenement> findRange(int[] range);
+    List<DemandeAjout> findRange(int[] range);
 
     int count();
     

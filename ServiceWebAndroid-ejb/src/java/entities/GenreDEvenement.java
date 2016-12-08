@@ -11,12 +11,13 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,12 +35,11 @@ public class GenreDEvenement implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
-    @OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
-    private List<Evenement> evenementList;
+    
 
     public GenreDEvenement() {
     }
@@ -56,14 +56,7 @@ public class GenreDEvenement implements Serializable {
         this.id = id;
     }
 
-    @XmlTransient
-    public List<Evenement> getEvenementList() {
-        return evenementList;
-    }
-
-    public void setEvenementList(List<Evenement> evenementList) {
-        this.evenementList = evenementList;
-    }
+ 
 
     @Override
     public int hashCode() {

@@ -22,7 +22,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.codehaus.jackson.map.ObjectMapper;
-import sessions.EvenementFacadeLocal;
+import sessions.ParticipationFacadeLocal;
+
 import sessions.PersonneFacadeLocal;
 
 
@@ -35,8 +36,10 @@ import sessions.PersonneFacadeLocal;
 @Path("/mesevenements")
 public class MesEvenements {
 
+    ParticipationFacadeLocal participationFacade = lookupParticipationFacadeLocal();
+
    
-    EvenementFacadeLocal evenementFacade = lookupEvenementFacadeLocal();
+    
     PersonneFacadeLocal personneFacade = lookupPersonneFacadeLocal();
     
     // HTTP Get Method
@@ -57,7 +60,7 @@ public class MesEvenements {
             P=personneFacade.find(mapper.readValue(personne, Personne.class).getId());
             //récupération et conversion des événements auquels la personne participe
             Gson gson = new Gson();
-            response= gson.toJson(evenementFacade.evenementsPersonne(P));
+            response= gson.toJson(participationFacade.evenementsPersonne(P));
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,15 +87,17 @@ public class MesEvenements {
         }
     }
 
-    private EvenementFacadeLocal lookupEvenementFacadeLocal() {
+    private ParticipationFacadeLocal lookupParticipationFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (EvenementFacadeLocal) c.lookup("java:global/ServiceWebAndroid/ServiceWebAndroid-ejb/EvenementFacade!sessions.EvenementFacadeLocal");
+            return (ParticipationFacadeLocal) c.lookup("java:global/ServiceWebAndroid/ServiceWebAndroid-ejb/ParticipationFacade!sessions.ParticipationFacadeLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
     }
+
+    
 
 
     

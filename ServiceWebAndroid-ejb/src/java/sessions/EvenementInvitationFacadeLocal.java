@@ -29,6 +29,5 @@ public interface EvenementInvitationFacadeLocal {
     List<EvenementInvitation> findRange(int[] range);
 
     int count();
-   
     
 }

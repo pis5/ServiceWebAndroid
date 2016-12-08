@@ -16,10 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,7 +24,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -50,13 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Personne.findByLieuDeNaissance", query = "SELECT p FROM Personne p WHERE p.lieuDeNaissance = :lieuDeNaissance"),
     @NamedQuery(name = "Personne.findByDateDeNaissance", query = "SELECT p FROM Personne p WHERE p.dateDeNaissance = :dateDeNaissance"),
     @NamedQuery(name = "Personne.findByDateDEnregistrement", query = "SELECT p FROM Personne p WHERE p.dateDEnregistrement = :dateDEnregistrement"),
-    @NamedQuery(name = "Personne.findByMotDePasse", query = "SELECT p FROM Personne p WHERE p.motDePasse = :motDePasse"),
-    @NamedQuery(name = "Personne.findByMailAndPass", query = "SELECT p FROM Personne p WHERE p.email = :mail AND p.motDePasse = :pass")})
+    @NamedQuery(name = "Personne.findByMotDePasse", query = "SELECT p FROM Personne p WHERE p.motDePasse = :motDePasse")})
 public class Personne implements Serializable {
-
-    @Lob
-    @Column(name = "photo")
-    private byte[] photo;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -74,7 +65,7 @@ public class Personne implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "prenom")
     private String prenom;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -100,28 +91,9 @@ public class Personne implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "mot_de_passe")
     private String motDePasse;
-    @JoinTable(name = "demande_ajout", joinColumns = {
-        @JoinColumn(name = "emetteur", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "recepteur", referencedColumnName = "id")})
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Personne> personneList;
-    @ManyToMany(mappedBy = "personneList", fetch = FetchType.LAZY)
-    private List<Personne> personneList1;
-    @JoinTable(name = "amis", joinColumns = {
-        @JoinColumn(name = "ami", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "personne", referencedColumnName = "id")})
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Personne> personneList2;
-    @ManyToMany(mappedBy = "personneList2", fetch = FetchType.LAZY)
-    private List<Personne> personneList3;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personne1", fetch = FetchType.LAZY)
-    private List<Invitation> invitationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisateur", fetch = FetchType.LAZY)
-    private List<Evenement> evenementList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personne", fetch = FetchType.LAZY)
-    private List<EvenementInvitation> evenementInvitationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personne1", fetch = FetchType.LAZY)
-    private List<EvenementInvitation> evenementInvitationList1;
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;
 
     public Personne() {
     }
@@ -218,78 +190,15 @@ public class Personne implements Serializable {
         this.motDePasse = motDePasse;
     }
 
-
-    @XmlTransient
-    public List<Personne> getPersonneList() {
-        return personneList;
+    public byte[] getPhoto() {
+        return photo;
     }
 
-    public void setPersonneList(List<Personne> personneList) {
-        this.personneList = personneList;
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 
-    @XmlTransient
-    public List<Personne> getPersonneList1() {
-        return personneList1;
-    }
-
-    public void setPersonneList1(List<Personne> personneList1) {
-        this.personneList1 = personneList1;
-    }
-
-    @XmlTransient
-    public List<Personne> getPersonneList2() {
-        return personneList2;
-    }
-
-    public void setPersonneList2(List<Personne> personneList2) {
-        this.personneList2 = personneList2;
-    }
-
-    @XmlTransient
-    public List<Personne> getPersonneList3() {
-        return personneList3;
-    }
-
-    public void setPersonneList3(List<Personne> personneList3) {
-        this.personneList3 = personneList3;
-    }
-
-    @XmlTransient
-    public List<Invitation> getInvitationList() {
-        return invitationList;
-    }
-
-    public void setInvitationList(List<Invitation> invitationList) {
-        this.invitationList = invitationList;
-    }
-
-    @XmlTransient
-    public List<Evenement> getEvenementList() {
-        return evenementList;
-    }
-
-    public void setEvenementList(List<Evenement> evenementList) {
-        this.evenementList = evenementList;
-    }
-
-    @XmlTransient
-    public List<EvenementInvitation> getEvenementInvitationList() {
-        return evenementInvitationList;
-    }
-
-    public void setEvenementInvitationList(List<EvenementInvitation> evenementInvitationList) {
-        this.evenementInvitationList = evenementInvitationList;
-    }
-
-    @XmlTransient
-    public List<EvenementInvitation> getEvenementInvitationList1() {
-        return evenementInvitationList1;
-    }
-
-    public void setEvenementInvitationList1(List<EvenementInvitation> evenementInvitationList1) {
-        this.evenementInvitationList1 = evenementInvitationList1;
-    }
+  
 
     @Override
     public int hashCode() {
@@ -314,14 +223,6 @@ public class Personne implements Serializable {
     @Override
     public String toString() {
         return "entities.Personne[ id=" + id + " ]";
-    }
-
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
     }
     
 }

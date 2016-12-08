@@ -25,42 +25,45 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ilias
  */
 @Entity
-@Table(name = "invitation")
+@Table(name = "amis")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Invitation.findAll", query = "SELECT i FROM Invitation i"),
-    @NamedQuery(name = "Invitation.findByPersonne", query = "SELECT i FROM Invitation i WHERE i.invitationPK.personne = :personne"),
-    @NamedQuery(name = "Invitation.findByEmail", query = "SELECT i FROM Invitation i WHERE i.invitationPK.email = :email"),
-    @NamedQuery(name = "Invitation.findByDate", query = "SELECT i FROM Invitation i WHERE i.date = :date")})
-public class Invitation implements Serializable {
+    @NamedQuery(name = "Amis.findAll", query = "SELECT a FROM Amis a"),
+    @NamedQuery(name = "Amis.findByPersonne", query = "SELECT a FROM Amis a WHERE a.amisPK.personne = :personne"),
+    @NamedQuery(name = "Amis.findByAmi", query = "SELECT a FROM Amis a WHERE a.amisPK.ami = :ami"),
+    @NamedQuery(name = "Amis.findByDate", query = "SELECT a FROM Amis a WHERE a.date = :date")})
+public class Amis implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected InvitationPK invitationPK;
+    protected AmisPK amisPK;
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @JoinColumn(name = "personne", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "ami", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Personne personne1;
+    @JoinColumn(name = "personne", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Personne personne2;
 
-    public Invitation() {
+    public Amis() {
     }
 
-    public Invitation(InvitationPK invitationPK) {
-        this.invitationPK = invitationPK;
+    public Amis(AmisPK amisPK) {
+        this.amisPK = amisPK;
     }
 
-    public Invitation(int personne, String email) {
-        this.invitationPK = new InvitationPK(personne, email);
+    public Amis(int personne, int ami) {
+        this.amisPK = new AmisPK(personne, ami);
     }
 
-    public InvitationPK getInvitationPK() {
-        return invitationPK;
+    public AmisPK getAmisPK() {
+        return amisPK;
     }
 
-    public void setInvitationPK(InvitationPK invitationPK) {
-        this.invitationPK = invitationPK;
+    public void setAmisPK(AmisPK amisPK) {
+        this.amisPK = amisPK;
     }
 
     public Date getDate() {
@@ -79,21 +82,29 @@ public class Invitation implements Serializable {
         this.personne1 = personne1;
     }
 
+    public Personne getPersonne2() {
+        return personne2;
+    }
+
+    public void setPersonne2(Personne personne2) {
+        this.personne2 = personne2;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (invitationPK != null ? invitationPK.hashCode() : 0);
+        hash += (amisPK != null ? amisPK.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Invitation)) {
+        if (!(object instanceof Amis)) {
             return false;
         }
-        Invitation other = (Invitation) object;
-        if ((this.invitationPK == null && other.invitationPK != null) || (this.invitationPK != null && !this.invitationPK.equals(other.invitationPK))) {
+        Amis other = (Amis) object;
+        if ((this.amisPK == null && other.amisPK != null) || (this.amisPK != null && !this.amisPK.equals(other.amisPK))) {
             return false;
         }
         return true;
@@ -101,7 +112,7 @@ public class Invitation implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Invitation[ invitationPK=" + invitationPK + " ]";
+        return "entities.Amis[ amisPK=" + amisPK + " ]";
     }
     
 }

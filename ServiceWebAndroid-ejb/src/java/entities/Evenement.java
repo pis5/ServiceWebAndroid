@@ -13,11 +13,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -44,21 +44,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evenement.findByDateDeCreation", query = "SELECT e FROM Evenement e WHERE e.dateDeCreation = :dateDeCreation"),
     @NamedQuery(name = "Evenement.findByDateEvenement", query = "SELECT e FROM Evenement e WHERE e.dateEvenement = :dateEvenement"),
     @NamedQuery(name = "Evenement.findByHeure", query = "SELECT e FROM Evenement e WHERE e.heure = :heure"),
-    @NamedQuery(name = "Evenement.findByNombreInvitesMax", query = "SELECT e FROM Evenement e WHERE e.nombreInvitesMax = :nombreInvitesMax"),
-    @NamedQuery(name = "Evenement.findByParticipant", query = "SELECT e FROM Evenement e WHERE :personne  Member OF e.personneList")
-    })
+    @NamedQuery(name = "Evenement.findByNombreInvitesMax", query = "SELECT e FROM Evenement e WHERE e.nombreInvitesMax = :nombreInvitesMax")})
 public class Evenement implements Serializable {
-
-    @JoinTable(name = "participation", joinColumns = {
-        @JoinColumn(name = "evenement", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "participant", referencedColumnName = "id")})
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Personne> personneList;
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -81,17 +73,18 @@ public class Evenement implements Serializable {
     private Date heure;
     @Column(name = "nombre_invites_max")
     private Integer nombreInvitesMax;
-    @JoinColumn(name = "organisateur", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Personne organisateur;
+  //  @OneToMany(cascade = CascadeType.ALL, mappedBy = "evenement1", fetch = FetchType.LAZY)
+  //  private List<Participation> participationList;
     @JoinColumn(name = "genre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private GenreDEvenement genre;
     @JoinColumn(name = "lieu", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Lieu lieu;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evenement1", fetch = FetchType.LAZY)
-    private List<EvenementInvitation> evenementInvitationList;
+    @JoinColumn(name = "organisateur", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Personne organisateur;
+    
 
     public Evenement() {
     }
@@ -161,13 +154,7 @@ public class Evenement implements Serializable {
         this.nombreInvitesMax = nombreInvitesMax;
     }
 
-    public Personne getOrganisateur() {
-        return organisateur;
-    }
-
-    public void setOrganisateur(Personne organisateur) {
-        this.organisateur = organisateur;
-    }
+    
 
     public GenreDEvenement getGenre() {
         return genre;
@@ -185,14 +172,22 @@ public class Evenement implements Serializable {
         this.lieu = lieu;
     }
 
-    @XmlTransient
+    public Personne getOrganisateur() {
+        return organisateur;
+    }
+
+    public void setOrganisateur(Personne organisateur) {
+        this.organisateur = organisateur;
+    }
+
+    /*@XmlTransient
     public List<EvenementInvitation> getEvenementInvitationList() {
         return evenementInvitationList;
     }
 
     public void setEvenementInvitationList(List<EvenementInvitation> evenementInvitationList) {
         this.evenementInvitationList = evenementInvitationList;
-    }
+    }*/
 
     @Override
     public int hashCode() {
@@ -217,15 +212,6 @@ public class Evenement implements Serializable {
     @Override
     public String toString() {
         return "entities.Evenement[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<Personne> getPersonneList() {
-        return personneList;
-    }
-
-    public void setPersonneList(List<Personne> personneList) {
-        this.personneList = personneList;
     }
     
 }

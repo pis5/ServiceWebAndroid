@@ -5,7 +5,7 @@
  */
 package sessions;
 
-import entities.EvenementInvitation;
+import entities.DemandeAjout;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author ilias
  */
 @Stateless
-public class EvenementInvitationFacade extends AbstractFacade<EvenementInvitation> implements EvenementInvitationFacadeLocal {
+public class DemandeAjoutFacade extends AbstractFacade<DemandeAjout> implements DemandeAjoutFacadeLocal {
 
     @PersistenceContext(unitName = "ServiceWebAndroid-ejbPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class EvenementInvitationFacade extends AbstractFacade<EvenementInvitatio
         return em;
     }
 
-    public EvenementInvitationFacade() {
-        super(EvenementInvitation.class);
+    public DemandeAjoutFacade() {
+        super(DemandeAjout.class);
     }
     
 }
