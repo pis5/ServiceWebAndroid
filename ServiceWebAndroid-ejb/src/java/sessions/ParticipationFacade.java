@@ -9,6 +9,7 @@ import entities.Evenement;
 import entities.Participation;
 import entities.Personne;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +21,9 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ParticipationFacade extends AbstractFacade<Participation> implements ParticipationFacadeLocal {
+
+    @EJB
+    private AmisFacadeLocal amisFacade;
 
     @PersistenceContext(unitName = "ServiceWebAndroid-ejbPU")
     private EntityManager em;
@@ -43,6 +47,25 @@ public class ParticipationFacade extends AbstractFacade<Participation> implement
     return E;
      
      }   
+
+    @Override
+    public List<Evenement> evenementsAmis(Personne P, Integer offset, Integer nbre, boolean plusAncien) {
+        List<Evenement> E= null;
+        List <Personne> Amis= amisFacade.findAmis(P);
+        if(plusAncien){
+    Query q = em.createNamedQuery("Participation.findOldEventByParticipantAmis");
+    q.setParameter("offset", P);
+    q.setParameter("listAmis", Amis);
+    E=(List<Evenement>)q.setMaxResults(nbre).getResultList();}
+        else{
+    Query q = em.createNamedQuery("Participation.findNewEventByParticipantAmis");
+    q.setParameter("offset", P);
+    q.setParameter("listAmis", Amis);
+    E=(List<Evenement>)q.setMaxResults(nbre).getResultList();
+        }
+   
+    return E;
+    }
          
     
 }

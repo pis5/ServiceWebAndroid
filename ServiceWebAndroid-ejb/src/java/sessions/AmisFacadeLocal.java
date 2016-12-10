@@ -6,6 +6,7 @@
 package sessions;
 
 import entities.Amis;
+import entities.Personne;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,6 @@ public interface AmisFacadeLocal {
     List<Amis> findRange(int[] range);
 
     int count();
+     public List <Personne> findAmis(Personne P);
     
 }

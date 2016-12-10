@@ -32,5 +32,7 @@ public interface ParticipationFacadeLocal {
 
     int count();
     public List<Evenement> evenementsPersonne(Personne P);
+
+    public List<Evenement> evenementsAmis(Personne P, Integer offset, Integer nbre, boolean plusAncien);
     
 }
