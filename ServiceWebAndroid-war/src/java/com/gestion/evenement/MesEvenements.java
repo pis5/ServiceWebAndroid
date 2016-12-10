@@ -7,6 +7,7 @@ package com.gestion.evenement;
 
 import com.google.gson.Gson;
 import com.prgguru.jersey.Login;
+import entities.Evenement;
 import entities.Personne;
 import java.io.IOException;
 import java.util.logging.Level;
