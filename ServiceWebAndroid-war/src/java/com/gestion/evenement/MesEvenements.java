@@ -7,10 +7,8 @@ package com.gestion.evenement;
 
 import com.google.gson.Gson;
 import com.prgguru.jersey.Login;
-import entities.Evenement;
 import entities.Personne;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -66,7 +64,6 @@ public class MesEvenements {
         }
         
     return response;        
-    
     }
     
     
