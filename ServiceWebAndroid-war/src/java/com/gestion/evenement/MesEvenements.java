@@ -37,9 +37,6 @@ import sessions.PersonneFacadeLocal;
 public class MesEvenements {
 
     ParticipationFacadeLocal participationFacade = lookupParticipationFacadeLocal();
-
-   
-    
     PersonneFacadeLocal personneFacade = lookupPersonneFacadeLocal();
     
     // HTTP Get Method
