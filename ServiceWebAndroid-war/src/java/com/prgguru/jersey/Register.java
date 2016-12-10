@@ -60,7 +60,7 @@ public class Register {
         if(retCode == 0){
             response = Utility.constructJSON("register",true);
         }else {
-            response = Utility.constructJSON("register",false, "Cet E-mail est déja utilisé par un utilisateur enregistré");
+            response = Utility.constructJSON("register",false, "Cet E-mail est déjà utilisé par un utilisateur enregistré");
         }
           } catch (IOException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,7 +76,8 @@ public class Register {
            try{
                 personneFacade.create(P);
                     System.out.println("RegisterUSer if");
-                    result = 0;} catch (Exception  e){
+                    result = 0;
+           } catch (Exception  e){
                         System.out.println("user not registered");
                     result = 1;
                     }
