@@ -7,8 +7,10 @@ package com.prgguru.jersey;
 
 import com.google.gson.Gson;
 import com.prgguru.jersey.Login;
+import entities.Evenement;
 import entities.Personne;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -54,11 +56,15 @@ public class EvenementsAmis {
             //récupération et conversion des événements auquels la personne participe
             Gson gson = new Gson();
             P=gson.fromJson(personne, Personne.class);
+            System.out.println(P.getId());
+            List<Evenement> le= participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
+            System.out.println(le.size());
             response= gson.toJson(participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class)));
        // } catch (IOException ex) {
         //    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
        // }
         System.out.println("bye you");
+        System.out.println(response);
     return response;        
     
     }
