@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gestion.evenement;
+package com.prgguru.jersey;
 
 import com.google.gson.Gson;
 import com.prgguru.jersey.Login;
@@ -45,19 +45,20 @@ public class EvenementsAmis {
      public String afficherEvenements(@QueryParam("personne") String personne, @QueryParam("offset") String offset, @QueryParam("nbre") String nbre, @QueryParam("plusAncien") String plusAncien){
         String response = "";
         Personne P= null;
-        
+        System.out.println("hi you");
         ObjectMapper mapper = new ObjectMapper();
-        try {
+        //try {
             //récupération de la personne concernée
             
-            P=personneFacade.find(mapper.readValue(personne, Personne.class).getId());
+           // P=personneFacade.find(mapper.readValue(personne, Personne.class).getId());
             //récupération et conversion des événements auquels la personne participe
             Gson gson = new Gson();
+            P=gson.fromJson(personne, Personne.class);
             response= gson.toJson(participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class)));
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+       // } catch (IOException ex) {
+        //    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+       // }
+        System.out.println("bye you");
     return response;        
     
     }

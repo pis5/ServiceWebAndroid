@@ -55,7 +55,7 @@ public class ParticipationFacade extends AbstractFacade<Participation> implement
         Amis.add(P);
         if(plusAncien){
     Query q = em.createNamedQuery("Participation.findOldEventByParticipantAmis");
-    q.setParameter("offset", P);
+    q.setParameter("offset", offset);
     q.setParameter("listAmis", Amis);
     E=(List<Evenement>)q.setMaxResults(nbre).getResultList();}
         else{
