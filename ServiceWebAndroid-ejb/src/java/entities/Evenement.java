@@ -81,6 +81,7 @@ public class Evenement implements Serializable {
     @JoinColumn(name = "lieu", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Lieu lieu;
+    
     @JoinColumn(name = "organisateur", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Personne organisateur;
