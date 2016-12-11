@@ -82,7 +82,7 @@ public class Evenement implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Lieu lieu;
     @JoinColumn(name = "organisateur", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Personne organisateur;
     
 

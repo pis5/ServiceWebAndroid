@@ -64,7 +64,7 @@ public class EvenementsAmis {
         //    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
        // }
         System.out.println("bye you");
-        System.out.println(response);
+       
     return response;        
     
     }
