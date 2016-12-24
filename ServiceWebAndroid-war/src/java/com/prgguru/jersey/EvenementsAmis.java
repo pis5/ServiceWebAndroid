@@ -48,7 +48,6 @@ public class EvenementsAmis {
         String response = "";
         Personne P= null;
         System.out.println("hi you");
-        ObjectMapper mapper = new ObjectMapper();
         //try {
             //récupération de la personne concernée
             
@@ -60,7 +59,7 @@ public class EvenementsAmis {
             //List<Evenement> le= participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
             //System.out.println(le.size());
             List<Evenement> evenements = participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
-            System.out.println(evenements.toString());
+          //  System.out.println(evenements.toString());
             response= gson.toJson(participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class)));
        // } catch (IOException ex) {
         //    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

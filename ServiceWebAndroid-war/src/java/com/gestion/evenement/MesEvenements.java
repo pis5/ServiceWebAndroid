@@ -24,6 +24,7 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jackson.map.ObjectMapper;
 import sessions.EvenementFacade;
 import sessions.EvenementFacadeLocal;
+import sessions.LieuFacade;
 import sessions.ParticipationFacadeLocal;
 
 import sessions.PersonneFacadeLocal;
@@ -40,6 +41,7 @@ public class MesEvenements {
 
     ParticipationFacadeLocal participationFacade = lookupParticipationFacadeLocal();
     EvenementFacade eventFacade = new EvenementFacade();
+    LieuFacade lieuFacade = new LieuFacade();
     PersonneFacadeLocal personneFacade = lookupPersonneFacadeLocal();
     
     // HTTP Get Method
@@ -73,9 +75,15 @@ public class MesEvenements {
   
     
     @Path("/createEvent")
-    public void creerEvenement(@QueryParam("evenement") Evenement event){
-        eventFacade.create(event);
+    public String creerEvenement(@QueryParam("evenement") String event){
+        Evenement ev=null;
+        Gson gson = new Gson();
         
+        ev=gson.fromJson(event, Evenement.class);
+        lieuFacade.create(ev.getLieu());
+        eventFacade.create(ev);
+        
+        return "created";
     }
     
     
