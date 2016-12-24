@@ -59,6 +59,7 @@ public class MesEvenements {
             
             P=personneFacade.find(mapper.readValue(personne, Personne.class).getId());
             //récupération et conversion des événements auquels la personne participe
+            
             Gson gson = new Gson();
             response= gson.toJson(participationFacade.evenementsPersonne(P));
         } catch (IOException ex) {
@@ -66,7 +67,6 @@ public class MesEvenements {
         }
         
     return response;        
-    
     }
     
     

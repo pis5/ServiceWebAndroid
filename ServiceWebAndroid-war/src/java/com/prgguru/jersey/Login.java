@@ -35,12 +35,6 @@ public class Login {
 
     PersonneFacadeLocal personneFacade = lookupPersonneFacadeLocal();
 
-    
-   
-
-  
-    
-    
     // HTTP Get Method
     @GET
     // Path: http://localhost/<appln-folder-name>/login/dologin
