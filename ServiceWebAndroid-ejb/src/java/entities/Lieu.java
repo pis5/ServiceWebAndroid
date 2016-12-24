@@ -14,10 +14,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,6 +35,28 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Lieu.findAll", query = "SELECT l FROM Lieu l"),
     @NamedQuery(name = "Lieu.findById", query = "SELECT l FROM Lieu l WHERE l.id = :id")})
 public class Lieu implements Serializable {
+
+    @Size(max = 250)
+    @Column(name = "nom")
+    private String nom;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "longitude")
+    private double longitude;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "latitude")
+    private double latitude;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "placeID")
+    private int placeID;
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "adresse")
+    private String adresse;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -89,6 +114,46 @@ public class Lieu implements Serializable {
     @Override
     public String toString() {
         return "entities.Lieu[ id=" + id + " ]";
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public int getPlaceID() {
+        return placeID;
+    }
+
+    public void setPlaceID(int placeID) {
+        this.placeID = placeID;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
     
 }

@@ -10,6 +10,7 @@ import com.prgguru.jersey.Login;
 import entities.Evenement;
 import entities.Personne;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -58,6 +59,7 @@ public class MesEvenements {
             
             P=personneFacade.find(mapper.readValue(personne, Personne.class).getId());
             //récupération et conversion des événements auquels la personne participe
+            
             Gson gson = new Gson();
             response= gson.toJson(participationFacade.evenementsPersonne(P));
         } catch (IOException ex) {

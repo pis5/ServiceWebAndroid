@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -50,6 +51,12 @@ import javax.xml.bind.annotation.XmlTransient;
      @NamedQuery(name = "Personne.findByMailAndPass", query = "SELECT p FROM Personne p WHERE p.motDePasse = :pass and p.email = :mail")})
 public class Personne implements Serializable {
 
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisateur")
+    private Collection<Evenement> evenementCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,9 +99,6 @@ public class Personne implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "mot_de_passe")
     private String motDePasse;
-    @Lob
-    @Column(name = "photo")
-    private byte[] photo;
 
     public Personne() {
     }
@@ -191,13 +195,6 @@ public class Personne implements Serializable {
         this.motDePasse = motDePasse;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 
   
 
@@ -224,6 +221,24 @@ public class Personne implements Serializable {
     @Override
     public String toString() {
         return "entities.Personne[ id=" + id + " ]";
+    }
+
+
+    @XmlTransient
+    public Collection<Evenement> getEvenementCollection() {
+        return evenementCollection;
+    }
+
+    public void setEvenementCollection(Collection<Evenement> evenementCollection) {
+        this.evenementCollection = evenementCollection;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
     
 }

@@ -7,12 +7,9 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,18 +18,16 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ilias
+ * @author mkass
  */
 @Entity
 @Table(name = "evenement")
@@ -44,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evenement.findByDateDeCreation", query = "SELECT e FROM Evenement e WHERE e.dateDeCreation = :dateDeCreation"),
     @NamedQuery(name = "Evenement.findByDateEvenement", query = "SELECT e FROM Evenement e WHERE e.dateEvenement = :dateEvenement"),
     @NamedQuery(name = "Evenement.findByHeure", query = "SELECT e FROM Evenement e WHERE e.heure = :heure"),
-    @NamedQuery(name = "Evenement.findByNombreInvitesMax", query = "SELECT e FROM Evenement e WHERE e.nombreInvitesMax = :nombreInvitesMax")})
+    @NamedQuery(name = "Evenement.findByNombreInvitesMax", query = "SELECT e FROM Evenement e WHERE e.nombreInvitesMax = :nombreInvitesMax"),
+    @NamedQuery(name = "Evenement.findByGenre", query = "SELECT e FROM Evenement e WHERE e.genre = :genre")})
 public class Evenement implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,19 +69,15 @@ public class Evenement implements Serializable {
     private Date heure;
     @Column(name = "nombre_invites_max")
     private Integer nombreInvitesMax;
-  //  @OneToMany(cascade = CascadeType.ALL, mappedBy = "evenement1", fetch = FetchType.LAZY)
-  //  private List<Participation> participationList;
-    @JoinColumn(name = "genre", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private GenreDEvenement genre;
+    @Size(max = 1000)
+    @Column(name = "genre")
+    private String genre;
     @JoinColumn(name = "lieu", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Lieu lieu;
-    
     @JoinColumn(name = "organisateur", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Personne organisateur;
-    
 
     public Evenement() {
     }
@@ -155,13 +147,11 @@ public class Evenement implements Serializable {
         this.nombreInvitesMax = nombreInvitesMax;
     }
 
-    
-
-    public GenreDEvenement getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(GenreDEvenement genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
@@ -180,15 +170,6 @@ public class Evenement implements Serializable {
     public void setOrganisateur(Personne organisateur) {
         this.organisateur = organisateur;
     }
-
-    /*@XmlTransient
-    public List<EvenementInvitation> getEvenementInvitationList() {
-        return evenementInvitationList;
-    }
-
-    public void setEvenementInvitationList(List<EvenementInvitation> evenementInvitationList) {
-        this.evenementInvitationList = evenementInvitationList;
-    }*/
 
     @Override
     public int hashCode() {
