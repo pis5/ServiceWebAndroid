@@ -80,4 +80,16 @@
         <local>sessions.PersonneFacadeLocal</local>
         <ejb-link>ServiceWebAndroid-ejb.jar#PersonneFacade</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>EvenementFacade1</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessions.EvenementFacadeLocal</local>
+        <ejb-link>ServiceWebAndroid-ejb.jar#EvenementFacade</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>LieuFacade</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessions.LieuFacadeLocal</local>
+        <ejb-link>ServiceWebAndroid-ejb.jar#LieuFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>

@@ -64,8 +64,7 @@ public class Lieu implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @OneToMany(mappedBy = "lieu", fetch = FetchType.LAZY)
-    private List<Evenement> evenementList;
+    
 
     public Lieu() {
     }
@@ -82,14 +81,6 @@ public class Lieu implements Serializable {
         this.id = id;
     }
 
-    @XmlTransient
-    public List<Evenement> getEvenementList() {
-        return evenementList;
-    }
-
-    public void setEvenementList(List<Evenement> evenementList) {
-        this.evenementList = evenementList;
-    }
 
     @Override
     public int hashCode() {
