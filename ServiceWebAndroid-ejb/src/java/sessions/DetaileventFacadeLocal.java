@@ -29,5 +29,5 @@ public interface DetaileventFacadeLocal {
     List<Detailevent> findRange(int[] range);
 
     int count();
-    
+    public String DescriptionEvent(int idEvent);
 }

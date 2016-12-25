@@ -9,6 +9,7 @@ import entities.Detailevent;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +27,21 @@ public class DetaileventFacade extends AbstractFacade<Detailevent> implements De
 
     public DetaileventFacade() {
         super(Detailevent.class);
+    }
+
+    @Override
+    public String DescriptionEvent(int idEvent) {
+     
+        String Desc = null;
+      
+      Query q = em.createNamedQuery("Detailevent.findDescription");
+       
+      q.setParameter("idEvent",idEvent);
+      Desc= (String) q.getSingleResult();
+      return Desc ;
+        
+        
+    
     }
     
 }

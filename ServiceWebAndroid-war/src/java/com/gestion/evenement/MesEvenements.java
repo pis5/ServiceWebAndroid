@@ -7,6 +7,7 @@ package com.gestion.evenement;
 
 import com.google.gson.Gson;
 import com.prgguru.jersey.Login;
+import entities.Detailevent;
 import entities.Evenement;
 import entities.Personne;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.codehaus.jackson.map.ObjectMapper;
+import sessions.DetaileventFacade;
 import sessions.EvenementFacade;
 import sessions.EvenementFacadeLocal;
 import sessions.ParticipationFacadeLocal;
@@ -41,6 +43,7 @@ public class MesEvenements {
     ParticipationFacadeLocal participationFacade = lookupParticipationFacadeLocal();
     EvenementFacade eventFacade = new EvenementFacade();
     PersonneFacadeLocal personneFacade = lookupPersonneFacadeLocal();
+    DetaileventFacade detailFacade = new DetaileventFacade();
     
     // HTTP Get Method
     @GET
@@ -103,7 +106,12 @@ public class MesEvenements {
     
 
 
-    
+     @Path("/DetailEvent")
+    public void DescriptionEvent(@QueryParam("evenement") int idEvent){
+        
+        detailFacade.DescriptionEvent(idEvent);
+        
+    }
     
     
     

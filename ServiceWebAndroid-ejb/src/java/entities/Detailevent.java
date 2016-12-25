@@ -12,7 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Detailevent.findAll", query = "SELECT d FROM Detailevent d"),
+    @NamedQuery(name="Detailevent.findDescription",query="SELECT d.texte FROM Detailevent d WHERE d.idEvent =:idEvent"),
     @NamedQuery(name = "Detailevent.findByIdDetail", query = "SELECT d FROM Detailevent d WHERE d.idDetail = :idDetail")})
 public class Detailevent implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -43,6 +46,9 @@ public class Detailevent implements Serializable {
     @Lob
     @Column(name = "media")
     private byte[] media;
+    @JoinColumn(name = "id_Event", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Evenement idEvent;
 
     public Detailevent() {
     }
@@ -73,6 +79,14 @@ public class Detailevent implements Serializable {
 
     public void setMedia(byte[] media) {
         this.media = media;
+    }
+
+    public Evenement getIdEvent() {
+        return idEvent;
+    }
+
+    public void setIdEvent(Evenement idEvent) {
+        this.idEvent = idEvent;
     }
 
     @Override
