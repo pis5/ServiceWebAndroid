@@ -107,9 +107,9 @@ public class MesEvenements {
 
 
      @Path("/DetailEvent")
-    public void DescriptionEvent(@QueryParam("evenement") int idEvent){
+    public String DescriptionEvent(@QueryParam("evenement") int idEvent){
         
-        detailFacade.DescriptionEvent(idEvent);
+       return detailFacade.DescriptionEvent(idEvent);
         
     }
     
