@@ -52,7 +52,7 @@ public class ParticipationFacade extends AbstractFacade<Participation> implement
     public List<Evenement> evenementsAmis(Personne P, Integer offset, Integer nbre, boolean plusAncien) {
         List<Evenement> E= null;
         List <Personne> Amis= amisFacade.findAmis(P);
-        Amis.add(P);
+        //Amis.add(P);
         if(plusAncien){
             
     Query q = em.createNamedQuery("Participation.findOldEventByParticipantAmis");

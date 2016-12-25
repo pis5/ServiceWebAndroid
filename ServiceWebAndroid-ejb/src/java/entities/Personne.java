@@ -55,6 +55,7 @@ public class Personne implements Serializable {
     @Column(name = "photo")
     private byte[] photo;
 
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -220,6 +221,7 @@ public class Personne implements Serializable {
     public String toString() {
         return "entities.Personne[ id=" + id + " ]";
     }
+
 
 
 

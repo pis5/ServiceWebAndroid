@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.prgguru.jersey;
+package com.gestion.evenement;
 
 import com.google.gson.Gson;
 import com.prgguru.jersey.Login;
+import entities.Detailevent;
 import entities.Evenement;
-import entities.Lieu;
-import entities.Participation;
-import entities.ParticipationPK;
 import entities.Personne;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,9 +23,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.codehaus.jackson.map.ObjectMapper;
+import sessions.DetaileventFacade;
 import sessions.EvenementFacade;
 import sessions.EvenementFacadeLocal;
-import sessions.LieuFacadeLocal;
 import sessions.ParticipationFacadeLocal;
 
 import sessions.PersonneFacadeLocal;
@@ -45,13 +40,10 @@ import sessions.PersonneFacadeLocal;
 @Path("/mesevenements")
 public class MesEvenements {
 
-    LieuFacadeLocal lieuFacade = lookupLieuFacadeLocal();
-
-    EvenementFacadeLocal evenementFacade = lookupEvenementFacadeLocal();
-
     ParticipationFacadeLocal participationFacade = lookupParticipationFacadeLocal();
-    
+    EvenementFacade eventFacade = new EvenementFacade();
     PersonneFacadeLocal personneFacade = lookupPersonneFacadeLocal();
+    DetaileventFacade detailFacade = new DetaileventFacade();
     
     // HTTP Get Method
     @GET
@@ -75,42 +67,18 @@ public class MesEvenements {
             response= gson.toJson(participationFacade.evenementsPersonne(P));
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            
         }
         
     return response;        
     }
     
     
-  @GET
-    // Path: http://localhost/<appln-folder-name>/login/dologin
-  @Path("/createEvent")
-  // Produces JSON as response
-    @Produces(MediaType.APPLICATION_JSON) 
-    public String creerEvenement(@QueryParam("evenement") String event){
-       Evenement a= null;
-            Gson gson = new Gson();
-            a=gson.fromJson(event, Evenement.class);
-            Date actuelle = new Date();
-             Lieu lieu = a.getLieu();
-             
-             lieuFacade.create(lieu);
-            
-          a.setDateDeCreation(actuelle);
-        a.setLieu(lieu);
-        evenementFacade.create(a);
-        Participation P = new Participation();
-        P.setDate(actuelle);
-        P.setEvenement1(a);
-        Personne pers=personneFacade.find(a.getOrganisateur().getId());
-        P.setPersonne(pers);
-        ParticipationPK pk= new ParticipationPK();
-        pk.setEvenement(a.getId());
-        pk.setParticipant(pers.getId());
-        P.setParticipationPK(pk);
-        participationFacade.create(P);
+  
+    
+    @Path("/createEvent")
+    public void creerEvenement(@QueryParam("evenement") Evenement event){
+        eventFacade.create(event);
         
-        return("created");
     }
     
     
@@ -122,7 +90,6 @@ public class MesEvenements {
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
-            
         }
     }
 
@@ -136,30 +103,15 @@ public class MesEvenements {
         }
     }
 
-    private EvenementFacadeLocal lookupEvenementFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (EvenementFacadeLocal) c.lookup("java:global/ServiceWebAndroid/ServiceWebAndroid-ejb/EvenementFacade!sessions.EvenementFacadeLocal");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private LieuFacadeLocal lookupLieuFacadeLocal() {
-        try {
-            Context c = new InitialContext();
-            return (LieuFacadeLocal) c.lookup("java:global/ServiceWebAndroid/ServiceWebAndroid-ejb/LieuFacade!sessions.LieuFacadeLocal");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
     
 
 
-    
+     @Path("/DetailEvent")
+    public String DescriptionEvent(@QueryParam("evenement") int idEvent){
+        
+       return detailFacade.DescriptionEvent(idEvent);
+        
+    }
     
     
     
