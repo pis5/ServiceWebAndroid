@@ -6,6 +6,7 @@
 package sessions;
 
 import entities.Detailevent;
+import entities.Evenement;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,5 @@ public interface DetaileventFacadeLocal {
     List<Detailevent> findRange(int[] range);
 
     int count();
-    public String DescriptionEvent(int idEvent);
+    public String DescriptionEvent(Evenement Event);
 }

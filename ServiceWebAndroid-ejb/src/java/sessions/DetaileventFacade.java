@@ -6,6 +6,7 @@
 package sessions;
 
 import entities.Detailevent;
+import entities.Evenement;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,13 +31,13 @@ public class DetaileventFacade extends AbstractFacade<Detailevent> implements De
     }
 
     @Override
-    public String DescriptionEvent(int idEvent) {
+    public String DescriptionEvent(Evenement e) {
      
         String Desc = null;
       
       Query q = em.createNamedQuery("Detailevent.findDescription");
        
-      q.setParameter("idEvent",idEvent);
+      q.setParameter("event",e);
       Desc= (String) q.getSingleResult();
       return Desc ;
         
