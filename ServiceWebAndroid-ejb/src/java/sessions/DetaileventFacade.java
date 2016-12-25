@@ -1,24 +1,21 @@
-package sessions;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package sessions;
 
-
-import entities.EvenementInvitation;
+import entities.Detailevent;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author ilias
+ * @author HAMZA
  */
 @Stateless
-public class EvenementInvitationFacade extends AbstractFacade<EvenementInvitation> implements EvenementInvitationFacadeLocal {
-
+public class DetaileventFacade extends AbstractFacade<Detailevent> implements DetaileventFacadeLocal {
     @PersistenceContext(unitName = "ServiceWebAndroid-ejbPU")
     private EntityManager em;
 
@@ -27,8 +24,8 @@ public class EvenementInvitationFacade extends AbstractFacade<EvenementInvitatio
         return em;
     }
 
-    public EvenementInvitationFacade() {
-        super(EvenementInvitation.class);
+    public DetaileventFacade() {
+        super(Detailevent.class);
     }
     
 }
