@@ -54,8 +54,6 @@ public class Personne implements Serializable {
     @Lob
     @Column(name = "photo")
     private byte[] photo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisateur")
-    private Collection<Evenement> evenementCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -224,14 +222,6 @@ public class Personne implements Serializable {
     }
 
 
-    @XmlTransient
-    public Collection<Evenement> getEvenementCollection() {
-        return evenementCollection;
-    }
-
-    public void setEvenementCollection(Collection<Evenement> evenementCollection) {
-        this.evenementCollection = evenementCollection;
-    }
 
     public byte[] getPhoto() {
         return photo;

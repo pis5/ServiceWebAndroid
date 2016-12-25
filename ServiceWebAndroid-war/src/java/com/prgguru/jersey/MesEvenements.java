@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gestion.evenement;
+package com.prgguru.jersey;
 
 import com.google.gson.Gson;
 import com.prgguru.jersey.Login;
+import com.prgguru.jersey.Utility;
 import entities.Evenement;
+import entities.Lieu;
 import entities.Personne;
 import java.io.IOException;
 import java.util.List;
@@ -36,7 +38,7 @@ import sessions.PersonneFacadeLocal;
  * @author ilias
  */
 //Path: http://localhost/<appln-folder-name>/login
-@Path("/mesevenements")
+@Path("/mesevents")
 public class MesEvenements {
 
     ParticipationFacadeLocal participationFacade = lookupParticipationFacadeLocal();
@@ -73,17 +75,21 @@ public class MesEvenements {
     
     
   
-    
+    @GET
     @Path("/createEvent")
+    @Produces(MediaType.APPLICATION_JSON)
     public String creerEvenement(@QueryParam("evenement") String event){
         Evenement ev=null;
         Gson gson = new Gson();
         
         ev=gson.fromJson(event, Evenement.class);
+ 
+        System.out.println(ev.getLieu().getAdresse());
         lieuFacade.create(ev.getLieu());
+
         eventFacade.create(ev);
         
-        return "created";
+        return Utility.constructJSON("created", true);
     }
     
     

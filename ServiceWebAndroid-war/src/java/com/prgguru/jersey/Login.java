@@ -47,10 +47,10 @@ public class Login {
         Personne P= null;
         
         P=personneFacade.findByMailAndPass(uname,pwd);
-        System.out.println("hello");
         ObjectMapper mapper = new ObjectMapper();
         try {
             if(P!=null){
+               
             response= mapper.writeValueAsString(P);}
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

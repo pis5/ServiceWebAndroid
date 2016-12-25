@@ -55,13 +55,14 @@ public class EvenementsAmis {
             //récupération et conversion des événements auquels la personne participe
             Gson gson = new Gson();
             P=gson.fromJson(personne, Personne.class);
-            //System.out.println(P.getId());
+            //System.out.println(P.toString());
             //List<Evenement> le= participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
             //System.out.println(le.size());
             List<Evenement> evenements = participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
-          //  System.out.println(evenements.toString());
-            response= gson.toJson(participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class)));
-       // } catch (IOException ex) {
+            //System.out.println(evenements.toString());
+            response= gson.toJson(evenements);
+           
+// } catch (IOException ex) {
         //    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
        // }
         System.out.println("bye you");
