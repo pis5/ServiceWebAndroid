@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Detailevent.findAll", query = "SELECT d FROM Detailevent d"),
-    @NamedQuery(name="Detailevent.findDescription",query="SELECT d.texte FROM Detailevent d WHERE d.idEvent =:idEvent"),
+    @NamedQuery(name="Detailevent.findDescription",query="SELECT d.texte FROM Detailevent d WHERE d.idEvent =:event"),
     @NamedQuery(name = "Detailevent.findByIdDetail", query = "SELECT d FROM Detailevent d WHERE d.idDetail = :idDetail")})
 public class Detailevent implements Serializable {
     private static final long serialVersionUID = 1L;

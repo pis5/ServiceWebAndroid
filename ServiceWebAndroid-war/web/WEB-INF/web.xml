@@ -92,4 +92,10 @@
         <local>sessions.LieuFacadeLocal</local>
         <ejb-link>ServiceWebAndroid-ejb.jar#LieuFacade</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>EvenementFacade2</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessions.EvenementFacadeLocal</local>
+        <ejb-link>ServiceWebAndroid-ejb.jar#EvenementFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>
