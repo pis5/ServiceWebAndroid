@@ -5,7 +5,10 @@
  */
 package com.prgguru.jersey;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import entities.Amis;
 import entities.AmisPK;
 import entities.Evenement;
 import entities.Personne;
@@ -44,7 +47,11 @@ public class MesAmis {
      public String listeMesAmis(@QueryParam("personne") String personne){
         String response = "";
         Personne P= null;
-            Gson gson = new Gson();
+           Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .setDateFormat("MMM d, yyyy HH:mm:ss")
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
             P=gson.fromJson(personne, Personne.class);
             P=personneFacade.find(P.getId());
             response= gson.toJson(amisFacade.findAmis(P));
@@ -63,7 +70,11 @@ public class MesAmis {
         System.out.println("how you doing");
         Personne P= null;
         Personne P2=null;
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .setDateFormat("MMM d, yyyy HH:mm:ss")
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
             P=gson.fromJson(personne, Personne.class);
             P2=gson.fromJson(ASupprimer, Personne.class);
             P=personneFacade.find(P.getId());
@@ -99,7 +110,11 @@ public class MesAmis {
         System.out.println("hi you");
        
             //récupération de la personne concernée
-           Gson gson = new Gson();
+           Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .setDateFormat("MMM d, yyyy HH:mm:ss")
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
             P=gson.fromJson(p, Personne.class);
             P=personneFacade.find(P.getId());
             List<Personne> le= personneFacade.search(P,gson.fromJson(offset,Integer.class),gson.fromJson(nom,String.class),gson.fromJson(prenom,String.class),gson.fromJson(nbre,Integer.class),gson.fromJson(premierappel,boolean.class));
@@ -115,6 +130,52 @@ public class MesAmis {
     return response;        
     
     }
+     
+     
+           // HTTP Get Method
+    @GET
+    // Path: http://localhost/<appln-folder-name>/login/dologin
+     @Path("/add")
+    // Produces JSON as response
+    @Produces(MediaType.APPLICATION_JSON) 
+    // Query parameters are parameters: http://localhost/<appln-folder-name>/login/dologin?username=abc&password=xyz
+     public String addAmi(@QueryParam("personne") String personne, @QueryParam("personneaajouter") String AAjouter){
+        String response = "";
+        System.out.println("how you doing");
+        Personne P= null;
+        Personne P2=null;
+            Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .setDateFormat("MMM d, yyyy HH:mm:ss")
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
+            P=gson.fromJson(personne, Personne.class);
+            P2=gson.fromJson(AAjouter, Personne.class);
+            P=personneFacade.find(P.getId());
+            P2=personneFacade.find(P2.getId());
+            System.out.println(P2.getNom());
+            AmisPK A = new AmisPK();
+            A.setPersonne(P.getId());
+            A.setAmi(P2.getId()); 
+            Amis amis=new Amis();
+            amis.setAmisPK(A);
+            amis.setPersonne1(P);
+            amis.setPersonne2(P2);
+            amisFacade.create(amis);
+            amis=new Amis();
+            A = new AmisPK();
+            A.setPersonne(P2.getId());
+            A.setAmi(P.getId()); 
+            amis.setAmisPK(A);
+            amis.setPersonne1(P2);
+            amis.setPersonne2(P);
+            
+            response= "added";
+            System.out.println(response);
+    return response;
+     }
+     
+     
      
      
 

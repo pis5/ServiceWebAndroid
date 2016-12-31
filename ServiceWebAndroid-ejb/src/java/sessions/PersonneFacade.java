@@ -63,7 +63,7 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
         else{
             Personne p = find(offset);
            
-            
+            System.out.println(p.getNom());
     Query q = em.createNamedQuery("Personne.findPeople");
       q.setParameter("Nom", "%"+nom+"%");
       q.setParameter("Prenom","%"+prenom+"%" );
