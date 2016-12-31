@@ -169,7 +169,7 @@ public class MesAmis {
             amis.setAmisPK(A);
             amis.setPersonne1(P2);
             amis.setPersonne2(P);
-            
+            amisFacade.create(amis);
             response= "added";
             System.out.println(response);
     return response;
