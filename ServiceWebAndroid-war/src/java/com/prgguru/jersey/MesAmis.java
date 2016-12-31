@@ -83,6 +83,40 @@ public class MesAmis {
             System.out.println(response);
     return response;
      }
+     
+     
+     
+         // HTTP Get Method
+    @GET
+    // Path: http://localhost/<appln-folder-name>/login/dologin
+    @Path("/affichertoadd")
+    // Produces JSON as response
+    @Produces(MediaType.APPLICATION_JSON) 
+    // Query parameters are parameters: http://localhost/<appln-folder-name>/login/dologin?username=abc&password=xyz
+     public String findPeople(@QueryParam("personne") String p, @QueryParam("offset") String offset, @QueryParam("nom") String nom,@QueryParam("prenom") String prenom,@QueryParam("nbre") String nbre, @QueryParam("premierappel") String premierappel){
+        String response = "";
+        Personne P= null;
+        System.out.println("hi you");
+       
+            //récupération de la personne concernée
+           Gson gson = new Gson();
+            P=gson.fromJson(p, Personne.class);
+            P=personneFacade.find(P.getId());
+            List<Personne> le= personneFacade.search(P,gson.fromJson(offset,Integer.class),gson.fromJson(nom,String.class),gson.fromJson(prenom,String.class),gson.fromJson(nbre,Integer.class),gson.fromJson(premierappel,boolean.class));
+            System.out.println(le.size());
+          
+            response= gson.toJson(le);
+           
+// } catch (IOException ex) {
+        //    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+       // }
+        System.out.println("bye you");
+       
+    return response;        
+    
+    }
+     
+     
 
     private AmisFacadeLocal lookupAmisFacadeLocal() {
         try {
