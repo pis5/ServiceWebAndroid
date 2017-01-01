@@ -45,7 +45,7 @@ public class ProfilGestion {
     // Produces JSON as response
     @Produces(MediaType.APPLICATION_JSON) 
     // Query parameters are parameters: http://localhost/<appln-folder-name>/login/dologin?username=abc&password=xyz
-     public String listeDemandesAmis(@QueryParam("personne") String personne){
+     public String updateProfil(@QueryParam("personne") String personne){
         String response = "";
         Personne P;
            Gson gson = new GsonBuilder()
