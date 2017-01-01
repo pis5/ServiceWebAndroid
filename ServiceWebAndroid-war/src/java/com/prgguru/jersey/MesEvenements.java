@@ -62,25 +62,28 @@ public class MesEvenements {
     // Produces JSON as response
     @Produces(MediaType.APPLICATION_JSON) 
     // Query parameters are parameters: http://localhost/<appln-folder-name>/login/dologin?username=abc&password=xyz
-    public String afficherEvenements(@QueryParam("personne") String personne){
+    public String afficherEvenements(@QueryParam("personne") String personne, @QueryParam("offset") String offset, @QueryParam("nbre") String nbre, @QueryParam("plusAncien") String plusAncien){
         String response = "";
         Personne P= null;
-        
-        ObjectMapper mapper = new ObjectMapper();
-        try {
+        System.out.println("hi you");
+        //try {
             //récupération de la personne concernée
+           
+         Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .setDateFormat("MMM d, yyyy HH:mm:ss")
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
+            P=gson.fromJson(personne, Personne.class);
+            P=personneFacade.find(P.getId());
+             
+            List<Evenement> evenements = participationFacade.mesEvenements(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
+            System.out.println(evenements.size());
             
-            P=personneFacade.find(mapper.readValue(personne, Personne.class).getId());
-            //récupération et conversion des événements auquels la personne participe
-            
-            Gson gson = new Gson();
-            response= gson.toJson(participationFacade.evenementsPersonne(P));
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            
-        }
-        
-    return response;        
+            response= gson.toJson(evenements);
+      
+
+        return response;          
     }
     
     

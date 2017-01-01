@@ -35,4 +35,6 @@ public interface ParticipationFacadeLocal {
 
     public List<Evenement> evenementsAmis(Personne P, Integer offset, Integer nbre, boolean plusAncien);
     
+   public List<Evenement> mesEvenements(Personne P, Integer offset, Integer nbre, boolean plusAncien);
+    
 }

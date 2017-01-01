@@ -61,8 +61,6 @@ public class EvenementsAmis {
             P=gson.fromJson(personne, Personne.class);
             P=personneFacade.find(P.getId());
             
-            List<Evenement> le= participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
-            System.out.println(le.size());
             List<Evenement> evenements = participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
             
             response= gson.toJson(evenements);

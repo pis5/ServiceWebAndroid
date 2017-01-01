@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Participation.findByDate", query = "SELECT p FROM Participation p WHERE p.date = :date"),
     @NamedQuery(name = "Participation.findEventByParticipant", query = "SELECT Distinct(p.evenement1)FROM Participation p WHERE p.personne = :participant"),
     @NamedQuery(name = "Participation.findOldEventByParticipantAmis", query = "SELECT DISTINCT(p.evenement1) FROM Participation p WHERE (p.personne IN :listAmis) AND p.evenement1.id < :offset order by p.evenement1.id DESC"),
-    @NamedQuery(name = "Participation.findNewEventByParticipantAmis", query = "SELECT DISTINCT(p.evenement1) FROM Participation p WHERE (p.personne IN :listAmis) AND p.evenement1.id > :offset order by p.evenement1.id DESC")
+    @NamedQuery(name = "Participation.findNewEventByParticipantAmis", query = "SELECT DISTINCT(p.evenement1) FROM Participation p WHERE (p.personne IN :listAmis) AND p.evenement1.id > :offset order by p.evenement1.id DESC"),
+    @NamedQuery(name = "Participation.findOldEventByParticipant", query = "SELECT DISTINCT(p.evenement1) FROM Participation p WHERE (p.personne = :participant) AND p.evenement1.id < :offset order by p.evenement1.id DESC"),
+    @NamedQuery(name = "Participation.findNewEventByParticipant", query = "SELECT DISTINCT(p.evenement1) FROM Participation p WHERE (p.personne = :participant) AND p.evenement1.id > :offset order by p.evenement1.id DESC")
 })
 public class Participation implements Serializable {
 

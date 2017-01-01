@@ -72,6 +72,28 @@ public class ParticipationFacade extends AbstractFacade<Participation> implement
     E.removeAll(MesEvenements);}
     return E;
     }
+
+    @Override
+    public List<Evenement> mesEvenements(Personne P, Integer offset, Integer nbre, boolean plusAncien) {
+        List<Evenement> E= null;
+        
+        if(plusAncien){
+            
+            Query q = em.createNamedQuery("Participation.findOldEventByParticipant");
+            q.setParameter("offset", offset);
+            q.setParameter("participant", P);
+            E=(List<Evenement>)q.setMaxResults(nbre).getResultList();
+        }
+        else{
+
+            Query q = em.createNamedQuery("Participation.findNewEventByParticipant");
+            q.setParameter("offset", offset);
+            q.setParameter("participant", P);
+            E=(List<Evenement>)q.setMaxResults(nbre).getResultList();
+
+        }
+        return E;
+    }
          
     
 }
