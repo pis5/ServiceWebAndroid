@@ -31,7 +31,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "DemandeAjout.findAll", query = "SELECT d FROM DemandeAjout d"),
     @NamedQuery(name = "DemandeAjout.findByEmetteur", query = "SELECT d FROM DemandeAjout d WHERE d.demandeAjoutPK.emetteur = :emetteur"),
     @NamedQuery(name = "DemandeAjout.findByRecepteur", query = "SELECT d FROM DemandeAjout d WHERE d.demandeAjoutPK.recepteur = :recepteur"),
-    @NamedQuery(name = "DemandeAjout.findByDate", query = "SELECT d FROM DemandeAjout d WHERE d.date = :date")})
+    @NamedQuery(name = "DemandeAjout.findByDate", query = "SELECT d FROM DemandeAjout d WHERE d.date = :date"),
+    @NamedQuery(name = "DemandeAjout.findAmisByPersonne", query = "SELECT a.personne FROM DemandeAjout a where a.personne1 = :personne"),
+    @NamedQuery(name = "DemandeAjout.findPersonneByAmis", query = "SELECT a.personne1 FROM DemandeAjout a where a.personne = :personne"),
+    @NamedQuery(name = "DemandeAjout.delete", query = "DELETE FROM DemandeAjout a where a.personne1 = :recepteur and a.personne = :emetteur")})
 public class DemandeAjout implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,10 +44,10 @@ public class DemandeAjout implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @JoinColumn(name = "emetteur", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Personne personne;
     @JoinColumn(name = "recepteur", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Personne personne1;
 
     public DemandeAjout() {

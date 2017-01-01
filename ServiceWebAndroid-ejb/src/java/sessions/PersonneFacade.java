@@ -22,6 +22,9 @@ import javax.persistence.Query;
 public class PersonneFacade extends AbstractFacade<Personne> implements PersonneFacadeLocal {
 
     @EJB
+    private DemandeAjoutFacadeLocal demandeAjoutFacade;
+
+    @EJB
     private AmisFacadeLocal amisFacade;
 
     @PersistenceContext(unitName = "ServiceWebAndroid-ejbPU")
@@ -53,6 +56,8 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
          List<Personne> E= null;
          List <Personne> Amis= amisFacade.findAmis(P);
          Amis.add(P);
+         Amis.addAll(demandeAjoutFacade.findToutesDemandes(P));
+         System.out.println(Amis.size());
         if(premierappel){
             
     Query q = em.createNamedQuery("Personne.findPeopleFirstCall");
@@ -74,7 +79,8 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
     E=(List<Personne>)q.setMaxResults(nbre).getResultList();
     
         }
-   
+        if(Amis!=null){
+   E.removeAll(Amis);}
     return E;
           
     }
