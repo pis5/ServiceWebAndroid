@@ -5,7 +5,9 @@
  */
 package com.prgguru.jersey;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.prgguru.jersey.Login;
 import entities.Evenement;
 import entities.Personne;
@@ -50,16 +52,19 @@ public class EvenementsAmis {
         System.out.println("hi you");
         //try {
             //récupération de la personne concernée
-            
-           // P=personneFacade.find(mapper.readValue(personne, Personne.class).getId());
-            //récupération et conversion des événements auquels la personne participe
-            Gson gson = new Gson();
+           
+            Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .setDateFormat("MMM d, yyyy HH:mm:ss")
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
             P=gson.fromJson(personne, Personne.class);
-            //System.out.println(P.toString());
-            //List<Evenement> le= participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
-            //System.out.println(le.size());
+            P=personneFacade.find(P.getId());
+            
+            List<Evenement> le= participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
+            System.out.println(le.size());
             List<Evenement> evenements = participationFacade.evenementsAmis(P,gson.fromJson(offset,Integer.class),gson.fromJson(nbre,Integer.class),gson.fromJson(plusAncien,boolean.class));
-            //System.out.println(evenements.toString());
+            
             response= gson.toJson(evenements);
            
 // } catch (IOException ex) {

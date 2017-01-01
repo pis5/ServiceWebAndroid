@@ -5,6 +5,7 @@
  */
 package sessions;
 
+import entities.Evenement;
 import entities.Personne;
 import java.util.List;
 import javax.ejb.Local;
@@ -30,5 +31,7 @@ public interface PersonneFacadeLocal {
 
     int count();
     public Personne findByMailAndPass(String mail, String pass);
+
+    public List<Personne> search(Personne P,Integer offset, String nom, String prenom, Integer nbre, Boolean premierappel);
     
 }

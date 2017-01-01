@@ -5,7 +5,9 @@
  */
 package com.prgguru.jersey;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.prgguru.jersey.Login;
 import entities.Evenement;
 import entities.Lieu;
@@ -89,7 +91,11 @@ public class MesEvenements {
     @Produces(MediaType.APPLICATION_JSON) 
     public String creerEvenement(@QueryParam("evenement") String event){
        Evenement a= null;
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .setDateFormat("MMM d, yyyy HH:mm:ss")
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
             a=gson.fromJson(event, Evenement.class);
             Date actuelle = new Date();
              Lieu lieu = a.getLieu();

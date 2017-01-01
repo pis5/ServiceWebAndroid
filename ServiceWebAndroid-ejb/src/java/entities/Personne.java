@@ -48,7 +48,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Personne.findByDateDeNaissance", query = "SELECT p FROM Personne p WHERE p.dateDeNaissance = :dateDeNaissance"),
     @NamedQuery(name = "Personne.findByDateDEnregistrement", query = "SELECT p FROM Personne p WHERE p.dateDEnregistrement = :dateDEnregistrement"),
     @NamedQuery(name = "Personne.findByMotDePasse", query = "SELECT p FROM Personne p WHERE p.motDePasse = :motDePasse"),
-     @NamedQuery(name = "Personne.findByMailAndPass", query = "SELECT p FROM Personne p WHERE p.motDePasse = :pass and p.email = :mail")})
+    @NamedQuery(name = "Personne.findByMailAndPass", query = "SELECT p FROM Personne p WHERE p.motDePasse = :pass and p.email = :mail"),
+    @NamedQuery(name = "Personne.findPeople", query = "SELECT p FROM Personne p WHERE (not(p IN :list)) and (p.nom LIKE :Nom and p.prenom LIKE :Prenom) and (p.nom > :persnom or (p.nom = :persnom and p.prenom > :persprenom) or (p.nom = :persnom and p.prenom = :persprenom and p.id> :pesid) ) order by p.nom ASC, p.prenom ASC, p.id DESC"),
+    @NamedQuery(name = "Personne.findPeopleFirstCall", query = "SELECT p FROM Personne p WHERE (not (p IN :list)) and (p.nom LIKE :Nom and p.prenom LIKE :Prenom) order by p.nom ASC, p.prenom ASC, p.id DESC")
+
+
+})
 public class Personne implements Serializable {
 
     @Lob

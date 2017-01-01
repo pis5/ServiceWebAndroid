@@ -52,7 +52,8 @@ public class ParticipationFacade extends AbstractFacade<Participation> implement
     public List<Evenement> evenementsAmis(Personne P, Integer offset, Integer nbre, boolean plusAncien) {
         List<Evenement> E= null;
         List <Personne> Amis= amisFacade.findAmis(P);
-        //Amis.add(P);
+        List <Evenement> MesEvenements= evenementsPersonne(P);
+        Amis.add(P);
         if(plusAncien){
             
     Query q = em.createNamedQuery("Participation.findOldEventByParticipantAmis");
@@ -60,12 +61,15 @@ public class ParticipationFacade extends AbstractFacade<Participation> implement
     q.setParameter("listAmis", Amis);
     E=(List<Evenement>)q.setMaxResults(nbre).getResultList();}
         else{
+           
     Query q = em.createNamedQuery("Participation.findNewEventByParticipantAmis");
     q.setParameter("offset", offset);
     q.setParameter("listAmis", Amis);
     E=(List<Evenement>)q.setMaxResults(nbre).getResultList();
+    
         }
-   
+        if(MesEvenements!=null){
+    E.removeAll(MesEvenements);}
     return E;
     }
          
