@@ -8,15 +8,12 @@ package com.prgguru.jersey;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.prgguru.jersey.Login;
 import entities.Evenement;
 import entities.Lieu;
 import entities.Participation;
 import entities.ParticipationPK;
 import entities.Personne;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import entities.Post;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,13 +26,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import org.codehaus.jackson.map.ObjectMapper;
-import sessions.EvenementFacade;
 import sessions.EvenementFacadeLocal;
 import sessions.LieuFacadeLocal;
 import sessions.ParticipationFacadeLocal;
 
 import sessions.PersonneFacadeLocal;
+import sessions.PostFacadeLocal;
 
 
 
@@ -46,6 +42,8 @@ import sessions.PersonneFacadeLocal;
 //Path: http://localhost/<appln-folder-name>/login
 @Path("/mesevenements")
 public class MesEvenements {
+
+    PostFacadeLocal postFacade = lookupPostFacadeLocal();
 
     LieuFacadeLocal lieuFacade = lookupLieuFacadeLocal();
 
@@ -120,6 +118,61 @@ public class MesEvenements {
         return("created");
     }
     
+     @GET
+    // Path: http://localhost/<appln-folder-name>/login/dologin
+  @Path("/add")
+  // Produces JSON as response
+    @Produces(MediaType.APPLICATION_JSON) 
+    public String participer(@QueryParam("personne") String pers,@QueryParam("evenement") String event){
+       Evenement a= null;
+       Personne P= null;
+            Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .setDateFormat("MMM d, yyyy HH:mm:ss")
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
+            a=evenementFacade.find(gson.fromJson(event, Evenement.class).getId());
+            P=personneFacade.find(gson.fromJson(pers, Personne.class).getId());
+            Date actuelle = new Date();
+             
+             
+        Participation Par = new Participation();
+        Par.setDate(actuelle);
+        Par.setEvenement1(a);
+        
+        Par.setPersonne(P);
+        ParticipationPK pk= new ParticipationPK();
+        pk.setEvenement(a.getId());
+        pk.setParticipant(P.getId());
+        Par.setParticipationPK(pk);
+        participationFacade.create(Par);
+        
+        return("added");
+}
+    
+    
+      @GET
+    // Path: http://localhost/<appln-folder-name>/login/dologin
+  @Path("/createPost")
+  // Produces JSON as response
+    @Produces(MediaType.APPLICATION_JSON) 
+    public String creerPost(@QueryParam("post") String event){
+       Post a= null;
+            Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .setDateFormat("MMM d, yyyy HH:mm:ss")
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
+            a=gson.fromJson(event, Post.class);
+            Date actuelle = new Date();
+             
+            
+          a.setDate(actuelle);
+          postFacade.create(a);
+        
+        return("created");
+    }
+    
     
 
     private PersonneFacadeLocal lookupPersonneFacadeLocal() {
@@ -157,6 +210,16 @@ public class MesEvenements {
         try {
             Context c = new InitialContext();
             return (LieuFacadeLocal) c.lookup("java:global/ServiceWebAndroid/ServiceWebAndroid-ejb/LieuFacade!sessions.LieuFacadeLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private PostFacadeLocal lookupPostFacadeLocal() {
+        try {
+            Context c = new InitialContext();
+            return (PostFacadeLocal) c.lookup("java:global/ServiceWebAndroid/ServiceWebAndroid-ejb/PostFacade!sessions.PostFacadeLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
