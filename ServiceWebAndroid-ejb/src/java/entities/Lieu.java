@@ -36,6 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Lieu.findById", query = "SELECT l FROM Lieu l WHERE l.id = :id")})
 public class Lieu implements Serializable {
 
+
+
     @Size(max = 250)
     @Column(name = "nom")
     private String nom;
@@ -146,5 +148,7 @@ public class Lieu implements Serializable {
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
+
+
     
 }

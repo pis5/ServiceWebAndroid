@@ -110,4 +110,10 @@
         <local>sessions.EvenementFacadeLocal</local>
         <ejb-link>ServiceWebAndroid-ejb.jar#EvenementFacade</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>PostFacade</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sessions.PostFacadeLocal</local>
+        <ejb-link>ServiceWebAndroid-ejb.jar#PostFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>

@@ -66,9 +66,7 @@ public class MesEvenements {
         String response = "";
         Personne P= null;
         System.out.println("hi you");
-        //try {
-            //récupération de la personne concernée
-           
+
          Gson gson = new GsonBuilder()
         .setPrettyPrinting()
         .setDateFormat("MMM d, yyyy HH:mm:ss")
@@ -86,7 +84,7 @@ public class MesEvenements {
         return response;          
     }
     
-    
+  
   @GET
     // Path: http://localhost/<appln-folder-name>/login/dologin
   @Path("/createEvent")
