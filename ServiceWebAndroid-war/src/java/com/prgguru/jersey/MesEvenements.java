@@ -123,46 +123,6 @@ public class MesEvenements {
     }
     
     
-    
-     @GET
-    // Path: http://localhost/<appln-folder-name>/login/dologin
-  @Path("/add")
-  // Produces JSON as response
-    @Produces(MediaType.APPLICATION_JSON) 
-    public String participer(@QueryParam("personne") String pers,@QueryParam("evenement") String event){
-       Evenement a= null;
-       Personne P= null;
-            Gson gson = new GsonBuilder()
-        .setPrettyPrinting()
-        .setDateFormat("MMM d, yyyy HH:mm:ss")
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create();
-            a=evenementFacade.find(gson.fromJson(event, Evenement.class).getId());
-            P=personneFacade.find(gson.fromJson(pers, Personne.class).getId());
-            Date actuelle = new Date();
-             
-             
-        Participation Par = new Participation();
-        Par.setDate(actuelle);
-        Par.setEvenement1(a);
-        
-        Par.setPersonne(P);
-        ParticipationPK pk= new ParticipationPK();
-        pk.setEvenement(a.getId());
-        pk.setParticipant(P.getId());
-        Par.setParticipationPK(pk);
-        participationFacade.create(Par);
-        
-        return("added");
-    }
-    
-    
-    
-    
-    
-    
-    
-    
 
     private PersonneFacadeLocal lookupPersonneFacadeLocal() {
         try {
