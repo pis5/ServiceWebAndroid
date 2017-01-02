@@ -50,6 +50,7 @@ public class MesAmis {
     @Produces(MediaType.APPLICATION_JSON) 
     // Query parameters are parameters: http://localhost/<appln-folder-name>/login/dologin?username=abc&password=xyz
      public String listeMesAmis(@QueryParam("personne") String personne){
+         System.out.println("hi");
         String response = "";
         Personne P= null;
            Gson gson = new GsonBuilder()
