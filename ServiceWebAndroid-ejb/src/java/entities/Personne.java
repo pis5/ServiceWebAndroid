@@ -59,6 +59,7 @@ public class Personne implements Serializable {
     @Lob
     @Column(name = "photo")
     private byte[] photo;
+   
 
 
     private static final long serialVersionUID = 1L;
@@ -237,5 +238,7 @@ public class Personne implements Serializable {
     public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
+
+
     
 }

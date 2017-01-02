@@ -46,8 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evenement.findByNombreInvitesMax", query = "SELECT e FROM Evenement e WHERE e.nombreInvitesMax = :nombreInvitesMax"),
     @NamedQuery(name = "Evenement.findByGenre", query = "SELECT e FROM Evenement e WHERE e.genre = :genre")})
 public class Evenement implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEvent")
-    private List<Detailevent> detaileventList;
+
+
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -202,13 +202,8 @@ public class Evenement implements Serializable {
         return "entities.Evenement[ id=" + id + " ]";
     }
 
-    @XmlTransient
-    public List<Detailevent> getDetaileventList() {
-        return detaileventList;
-    }
+  
 
-    public void setDetaileventList(List<Detailevent> detaileventList) {
-        this.detaileventList = detaileventList;
-    }
+   
     
 }
